@@ -2,6 +2,8 @@ package main;
 
 import java.awt.Rectangle;
 
+import entity.Entity;
+
 public class EventHandler {
 	GamePanel gp;
 	EventRect eventRect[][][];
@@ -49,11 +51,12 @@ public class EventHandler {
 		}
 		
 		if (canTouchEvent == true) {
-			if(hit(0,27,16,"right") == true) {damagePit(gp.dialogueState);}
-			else if(hit(0,23,19,"any") == true) {damagePit(gp.dialogueState);}
-			else if(hit(0,23,12, "up") == true) {healingPool(gp.dialogueState);}
+			if(hit(0,23,12, "up") == true) {healingPool(gp.dialogueState);}
+			else if(hit(0,24,12, "up") == true) {healingPool(gp.dialogueState);}
+			else if(hit(0,22,12, "up") == true) {healingPool(gp.dialogueState);}
 			else if(hit(0, 10,39, "any") == true) {teleport(1, 12, 13);}
 			else if(hit(1, 12, 13, "any") == true) {teleport(0, 10,39);}
+			else if(hit(1,12,9, "up") == true) {speak(gp.npc[1][0]);}
 		}
 	}
 	
@@ -108,5 +111,12 @@ public class EventHandler {
 		tempRow = row;
 		canTouchEvent = false;
 		gp.playSE(13);
+	}
+	public void speak(Entity entity) {
+		if(gp.keyH.enterPressed == true) {
+			gp.gameState = gp.dialogueState;
+			gp.player.attackCancel = true;
+			entity.speak();
+		}
 	}
 }
